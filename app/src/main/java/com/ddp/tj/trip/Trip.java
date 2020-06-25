@@ -3,15 +3,15 @@ package com.ddp.tj.trip;
 import android.graphics.Bitmap;
 
 public class Trip {
-    private String name;
+    private String title;
     private String destination;
     private Bitmap picture;
-    private double price;
-    private double rating;
+    private Double price;
+    private Double rating;
     private boolean favorite;
 
     public Trip(String name, String destination, Bitmap picture, double price, double rating, boolean favorite) {
-        this.name = name;
+        this.title = name;
         this.destination = destination;
         this.picture = picture;
         this.price = price;
@@ -19,12 +19,12 @@ public class Trip {
         this.favorite = favorite;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDestination() {
@@ -43,7 +43,7 @@ public class Trip {
         this.picture = picture;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -51,7 +51,7 @@ public class Trip {
         this.price = price;
     }
 
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
 

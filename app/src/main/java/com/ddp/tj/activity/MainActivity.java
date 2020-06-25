@@ -1,8 +1,10 @@
-package com.ddp.tj;
+package com.ddp.tj.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.ddp.tj.R;
 
 public class MainActivity extends AppCompatActivity {
 

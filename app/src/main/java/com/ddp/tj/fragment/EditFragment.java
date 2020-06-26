@@ -191,58 +191,59 @@ public class EditFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(newTrip) {
-                    data.add(trip);
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            ((MainActivity)getActivity()).getDb().tripDao().insertTrip(trip);
+                if(trip.isComplete()) {
+                    if (newTrip) {
+                        data.add(trip);
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                ((MainActivity) getActivity()).getDb().tripDao().insertTrip(trip);
+                            }
+                        };
+                        Thread thread = new Thread(runnable);
+                        thread.start();
+                        //TODO: make nice loading animation
+                        try {
+                            FileOutputStream out = getContext().openFileOutput("image_" + trip.getTripID() + ".png", Context.MODE_PRIVATE);
+                            trip.getPicture().compress(Bitmap.CompressFormat.PNG, 100, out);
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    };
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-                    //TODO: make nice loading animation
-                    try {
-                        FileOutputStream out = getContext().openFileOutput("image_" + trip.getTripID() + ".png", Context.MODE_PRIVATE);
-                        trip.getPicture().compress(Bitmap.CompressFormat.PNG, 100, out);
-                        out.close();
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    try{
-                        thread.join();
-                    }
-                    catch (Exception ignore){
+                        try {
+                            thread.join();
+                        } catch (Exception ignore) {
 
-                    }
-
-                }else {
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            ((MainActivity) getActivity()).getDb().tripDao().updateTrip(trip);
                         }
-                    };
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-                    //TODO: make nice loading animation
-                    try {
-                        FileOutputStream out = getContext().openFileOutput("image_" + trip.getTripID() + ".png", Context.MODE_PRIVATE);
-                        trip.getPicture().compress(Bitmap.CompressFormat.PNG, 100, out);
-                        out.close();
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    try{
-                        thread.join();
-                    }
-                    catch (Exception ignore){
 
+                    } else {
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                ((MainActivity) getActivity()).getDb().tripDao().updateTrip(trip);
+                            }
+                        };
+                        Thread thread = new Thread(runnable);
+                        thread.start();
+                        //TODO: make nice loading animation
+                        try {
+                            FileOutputStream out = getContext().openFileOutput("image_" + trip.getTripID() + ".png", Context.MODE_PRIVATE);
+                            trip.getPicture().compress(Bitmap.CompressFormat.PNG, 100, out);
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            thread.join();
+                        } catch (Exception ignore) {
+
+                        }
                     }
+                    ((MainActivity) getActivity()).returnToPreviousFragment();
                 }
-                ((MainActivity)getActivity()).returnToPreviousFragment();
+                else{
+                    Toast.makeText(getActivity(),"Need to complete all fields!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -146,4 +146,15 @@ public class Trip {
         trip.rating = rating + 0;
         return trip;
     }
+
+    public boolean isComplete(){
+        return  this.title != null &&
+                this.destination != null &&
+                this.startDate != null &&
+                this.endDate != null &&
+                this.price != null &&
+                this.rating != null &&
+                this.picture != null &&
+                this.type != null;
+    }
 }

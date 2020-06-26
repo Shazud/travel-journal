@@ -375,21 +375,51 @@ public class EditFragment extends Fragment {
         startDateView.setKeyListener(null);
         endDateView.setKeyListener(null);
 
+        startDateView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    v.setClickable(false);
+                    Calendar calendar = trip.getStartDate();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), startDp, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+                    v.setClickable(true);
+                }
+            }
+        });
+
         startDateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setClickable(false);
                 Calendar calendar = trip.getStartDate();
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), startDp, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
+                v.setClickable(true);
+            }
+        });
+
+        endDateView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    v.setClickable(false);
+                    Calendar calendar = trip.getEndDate();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), endDp, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+                    v.setClickable(true);
+                }
             }
         });
 
         endDateView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setClickable(false);
                 Calendar calendar = trip.getEndDate();
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), endDp, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
+                v.setClickable(true);
             }
         });
 

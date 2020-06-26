@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Travel Journal</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="trip_edit_title">Trip Name</string>
+    <string name="trip_edit_destination">Destination</string>
+    <string name="trip_edit_price">Price</string>
+    <string name="trip_edit_type">Trip Type</string>
+    <string name="trip_edit_start_date">Start Date</string>
+    <string name="trip_edit_end_date">End Date</string>
+    <string name="trip_edit_start_date_hint">Press to add date</string>
+    <string name="trip_edit_end_date_hint">Press to add date</string>
+    <string name="trip_edit_rating">Rating</string>
+    <string name="trip_edit_gallery_photo">Gallery Photo</string>
+    <string name="trip_edit_take_photo">Take Photo</string>
+    <string name="trip_edit_choose_image">Choose an image</string>
+    <string name="trip_edit_radio_city_break">City Break</string>
+    <string name="trip_edit_radio_sea_side">Sea Side</string>
+    <string name="trip_edit_radio_mountains">Mountains</string>
+    <string name="trip_edit_date_title">Date</string>
+
+    <string name="currency_symbol">$</string>
+    <string name="date_format">dd/MM/yyyy</string>
+
+    <string name="trip_view_price">Price:</string>
+    <string name="trip_view_rating">Rating:</string>
+
 </resources>

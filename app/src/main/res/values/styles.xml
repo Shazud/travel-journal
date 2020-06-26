@@ -9,4 +9,13 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="trip_edit_edit_text_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="trip_edit_text_view_style">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

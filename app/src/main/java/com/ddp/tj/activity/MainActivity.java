@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.UnicodeSetSpanner;
@@ -80,7 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ContactFragment()).commit();
                 break;
             case R.id.nav_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String shareText = "Travel journal is a great app!";
+                String shareSubject = "Check out Travel Journal!";
+                intent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+                intent.putExtra(Intent.EXTRA_TEXT, shareText);
+                startActivity(Intent.createChooser(intent,"Share using"));
+
                 break;
         }
         //Close the drawer afterwards

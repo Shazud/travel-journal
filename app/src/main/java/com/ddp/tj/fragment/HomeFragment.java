@@ -37,6 +37,8 @@ public class HomeFragment extends Fragment {
         dataAdapter = new TripAdapter(data);
         recyclerView.setAdapter(dataAdapter);
 
+
+
         return view;
     }
 

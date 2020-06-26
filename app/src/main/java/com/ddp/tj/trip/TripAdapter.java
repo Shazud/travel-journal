@@ -33,7 +33,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TripViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TripViewHolder holder, final int position) {
         holder.getTitle().setText(data.get(position).getTitle());
         holder.getDestination().setText(data.get(position).getDestination());
         if(data.get(position).isFavorite()) {
@@ -43,8 +43,22 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             holder.getFavorite().setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
         }
         //holder.getImage().setBackgroundResource(R.drawable.ic_insert_emoticon_black_24dp);
-        holder.getPrice().setText(data.get(position).getPrice().toString());
-        holder.getRating().setText(data.get(position).getRating().toString());
+        holder.getPrice().setText("$ " + data.get(position).getPrice().toString());
+        holder.getRating().setText("$ " + data.get(position).getRating().toString());
+
+        holder.getFavorite().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean state = !data.get(position).isFavorite();
+                data.get(position).setFavorite(state);
+                if(state) {
+                    v.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+                }
+                else{
+                    v.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+                }
+            }
+        });
 
     }
 
@@ -68,6 +82,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             this.rating = itemView.findViewById(R.id.trip_rating);
             this.favorite = itemView.findViewById(R.id.trip_favorite);
             this.image = itemView.findViewById(R.id.image);
+
+
 
         }
 

@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        dataAdapter = new TripAdapter(data);
+        dataAdapter = new TripAdapter(data,(MainActivity)getActivity());
         recyclerView.setAdapter(dataAdapter);
 
         //Floating action button init

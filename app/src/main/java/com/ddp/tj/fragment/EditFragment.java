@@ -134,7 +134,7 @@ public class EditFragment extends Fragment {
         }
 
         if(trip.getRating() != null){
-            ratingBar.setNumStars(trip.getRating().intValue());
+            ratingBar.setRating(trip.getRating().floatValue());
         }
         else{
             trip.setRating(new Double(0));

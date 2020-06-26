@@ -116,4 +116,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         data.add(new Trip("Go to mars", "Planet Mars", null, 1000000000, 5, true));
         return data;
     }
+
 }

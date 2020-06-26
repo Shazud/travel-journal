@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ddp.tj.R;
 import com.ddp.tj.trip.Trip;
 import com.ddp.tj.trip.TripAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,14 @@ public class HomeFragment extends Fragment {
         dataAdapter = new TripAdapter(data);
         recyclerView.setAdapter(dataAdapter);
 
+        //Floating action button init
+        FloatingActionButton fab = view.findViewById(R.id.home_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
         return view;

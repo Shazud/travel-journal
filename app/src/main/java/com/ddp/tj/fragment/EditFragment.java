@@ -3,9 +3,11 @@ package com.ddp.tj.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,12 +29,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import com.ddp.tj.R;
 import com.ddp.tj.activity.MainActivity;
+import com.ddp.tj.database.AppDatabase;
 import com.ddp.tj.trip.Trip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -161,6 +167,9 @@ public class EditFragment extends Fragment {
         if(trip.getPicture() != null){
             imageView.setImageBitmap(trip.getPicture());
         }
+        else {
+            imageView.setImageResource(R.drawable.ic_image_black_24dp);
+        }
 
         if(newTrip){
             cancelButton.setVisibility(View.INVISIBLE);
@@ -184,6 +193,54 @@ public class EditFragment extends Fragment {
             public void onClick(View v) {
                 if(newTrip) {
                     data.add(trip);
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).getDb().tripDao().insertTrip(trip);
+                        }
+                    };
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+                    //TODO: make nice loading animation
+                    try {
+                        FileOutputStream out = getContext().openFileOutput("image_" + trip.getTripID() + ".png", Context.MODE_PRIVATE);
+                        trip.getPicture().compress(Bitmap.CompressFormat.PNG, 100, out);
+                        out.close();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    try{
+                        thread.join();
+                    }
+                    catch (Exception ignore){
+
+                    }
+
+                }else {
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity) getActivity()).getDb().tripDao().updateTrip(trip);
+                        }
+                    };
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+                    //TODO: make nice loading animation
+                    try {
+                        FileOutputStream out = getContext().openFileOutput("image_" + trip.getTripID() + ".png", Context.MODE_PRIVATE);
+                        trip.getPicture().compress(Bitmap.CompressFormat.PNG, 100, out);
+                        out.close();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    try{
+                        thread.join();
+                    }
+                    catch (Exception ignore){
+
+                    }
                 }
                 ((MainActivity)getActivity()).returnToPreviousFragment();
             }
@@ -194,6 +251,24 @@ public class EditFragment extends Fragment {
             public void onClick(View v) {
                 if(!newTrip){
                     data.remove(trip);
+
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).getDb().tripDao().deleteTrip(trip);
+                        }
+                    };
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+                    //TODO: make nice loading animation
+                    File file = new File("image_" + trip.getTripID() + ".png");
+                    file.delete();
+                    try{
+                        thread.join();
+                    }
+                    catch (Exception ignore){
+
+                    }
                 }
                 ((MainActivity)getActivity()).returnToPreviousFragment();
             }
@@ -246,7 +321,7 @@ public class EditFragment extends Fragment {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                trip.setRating(rating);
+                trip.setRating(new Double(rating));
             }
         });
 

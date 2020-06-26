@@ -72,7 +72,12 @@ public class ViewFragment extends Fragment {
         startDateView.setText(new SimpleDateFormat(getActivity().getResources().getString(R.string.date_format)).format(trip.getStartDate().getTime()));
         endDateView.setText(new SimpleDateFormat(getActivity().getResources().getString(R.string.date_format)).format(trip.getEndDate().getTime()));
         ratingBar.setRating(trip.getRating().floatValue());
-        imageView.setImageBitmap(trip.getPicture());
+        if(trip.getPicture()==null) {
+            imageView.setImageResource(R.drawable.ic_image_black_24dp);
+        }
+        else {
+            imageView.setImageBitmap(trip.getPicture());
+        }
         if(trip.isFavorite()){
             favoriteButton.setImageResource(R.drawable.ic_favorite_white_24dp);
         }

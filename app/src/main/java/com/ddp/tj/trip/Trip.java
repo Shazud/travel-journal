@@ -1,20 +1,42 @@
 package com.ddp.tj.trip;
 
 import android.graphics.Bitmap;
+import android.graphics.Picture;
 
-import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.ddp.tj.database.CalendarConverter;
 
 import java.util.Calendar;
 
+@Entity(tableName = "Trip")
 public class Trip {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int tripID;
+    @ColumnInfo(name = "title")
     private String title;
+    @ColumnInfo(name = "destination")
     private String destination;
+    @Ignore
     private Bitmap picture;
+    @ColumnInfo(name = "price")
     private Double price;
+    @ColumnInfo(name = "rating")
     private Double rating;
+    @ColumnInfo(name = "favorite")
     private boolean favorite;
+    @ColumnInfo(name = "type")
     private String type;
+    @ColumnInfo(name = "startDate")
+    @TypeConverters(CalendarConverter.class)
     private Calendar startDate;
+    @ColumnInfo(name = "endDate")
+    @TypeConverters(CalendarConverter.class)
     private Calendar endDate;
 
     public Trip(){
@@ -58,16 +80,8 @@ public class Trip {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public Double getRating() {
         return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 
     public boolean isFavorite() {
@@ -110,8 +124,17 @@ public class Trip {
         this.endDate = endDate;
     }
 
+    public int getTripID() {
+        return tripID;
+    }
+
+    public void setTripID(int tripID) {
+        this.tripID = tripID;
+    }
+
     public Trip copyTrip() {
         Trip trip = new Trip();
+        trip.tripID = tripID;
         trip.title = title.concat("");
         trip.price = price + 0;
         trip.favorite = false;

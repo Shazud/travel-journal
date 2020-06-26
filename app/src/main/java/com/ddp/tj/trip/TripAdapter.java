@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         return vh;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull TripViewHolder holder, final int position) {
         holder.setTrip(data.get(position));
@@ -71,6 +73,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         }
         if(data.get(position).getPicture() != null) {
             holder.getImage().setImageBitmap(data.get(position).getPicture());
+        }
+        else{
+            holder.getImage().setImageResource(R.drawable.ic_image_black_24dp);
         }
         holder.getPrice().setText(currencySymbol + " " + data.get(position).getPrice().intValue());
         holder.getRating().setText(data.get(position).getRating().toString());
@@ -88,7 +93,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 }
             }
         });
-
+        holder.ratingBar.setRating(data.get(position).getRating().floatValue());
     }
 
     @Override
@@ -103,6 +108,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         private TextView rating;
         private ImageButton favorite;
         private ImageView image;
+        private RatingBar ratingBar;
         private Trip trip;
         public TripViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,7 +118,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             this.rating = itemView.findViewById(R.id.trip_rating);
             this.favorite = itemView.findViewById(R.id.trip_favorite);
             this.image = itemView.findViewById(R.id.trip_image);
-
+            this.ratingBar = itemView.findViewById(R.id.trip_rating_bar);
 
         }
 

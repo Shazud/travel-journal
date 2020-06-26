@@ -7,10 +7,11 @@
     android:padding="10dp"
     >
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:gravity="center"
         >
         <ImageView
             android:id="@+id/trip_image"
@@ -25,18 +26,21 @@
             android:orientation="vertical"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="10dp"
+            android:gravity="center"
             >
             <TextView
                 android:id="@+id/trip_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sample title"
+                android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
                 android:textSize="25sp"
                 />
             <TextView
                 android:id="@+id/trip_destination"
                 android:layout_width="wrap_content"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:text="Sample Destination"
                 android:paddingTop="20dp"
@@ -67,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,16 +81,18 @@
                 android:id="@+id/trip_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
                 android:text="4.5"
                 android:textSize="16sp" />
-
-            <ImageView
+            <RatingBar
+                android:id="@+id/trip_rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:src="@drawable/ic_star_black_24dp" />
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorCancel"
+                />
         </LinearLayout>
         <ImageButton
             android:id="@+id/trip_favorite"
@@ -94,12 +101,19 @@
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:background="#ffffff"
+            android:background="@drawable/ic_favorite_border_black_24dp"
+            android:backgroundTint="@color/colorDelete"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_favorite_border_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        style="@style/separator_style"
+        />
 </LinearLayout>

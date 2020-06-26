@@ -7,7 +7,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,25 +19,31 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ddp.tj.R;
+import com.ddp.tj.database.AppDatabase;
 import com.ddp.tj.fragment.AboutUsFragment;
 import com.ddp.tj.fragment.ContactFragment;
 import com.ddp.tj.fragment.HomeFragment;
 import com.ddp.tj.trip.Trip;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ArrayList<Trip> data;
+    private ArrayList<Trip> dataUnchanged;
+    private AppDatabase db;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        data = readData();
+        db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "production").build();
+        readData();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,9 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private ArrayList<Trip> readData() {
-        ArrayList<Trip> data = new ArrayList<>();
-        //TODO: implement local storage
+    private void readData() {
+        /*
         data.add(new Trip("Travel around the glove", "Hanoi", null, 1499.99, 4.65, false));
         data.add(new Trip("Go home gi", "USA", null, 123, 0, false));
         data.add(new Trip("Take out Viet Cong", "Vietnam", null, 3400, 3.21, false));
@@ -114,7 +123,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         data.add(new Trip("Sad lamba", "Hugga Bugga", null, 1499.99, 4.5, false));
         data.add(new Trip("Go to the moon", "Moon moon", null, 2000000, 4, true));
         data.add(new Trip("Go to mars", "Planet Mars", null, 1000000000, 5, true));
-        return data;
+        */
+        Runnable readData = new Runnable() {
+            @Override
+            public void run() {
+                data = new ArrayList<Trip>(db.tripDao().getAllTrips());
+                for(Trip trip:data){
+                    try{
+                        File file = getFileStreamPath("image_" + trip.getTripID() + ".png");
+                        FileInputStream fis = new FileInputStream(file);
+                        Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                        trip.setPicture(bitmap);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread dataThread = new Thread(readData);
+        dataThread.start();
+        //TODO: make nice loading animation
+        try {
+            dataThread.join();
+
+        }
+        catch (Exception ignore){
+
+        }
+        dataUnchanged = new ArrayList<Trip>();
+        dataUnchanged.clear();
+        dataUnchanged.addAll(data);
+
     }
 
+
+
+    public AppDatabase getDb(){
+        return db;
+    }
 }

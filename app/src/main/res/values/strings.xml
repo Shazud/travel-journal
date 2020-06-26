@@ -18,4 +18,7 @@
     <string name="trip_edit_radio_sea_side">Sea Side</string>
     <string name="trip_edit_radio_mountains">Mountains</string>
     <string name="trip_edit_date_title">Date</string>
+
+    <string name="currency_symbol">$</string>
+    <string name="date_format">dd/MM/yyyy</string>
 </resources>

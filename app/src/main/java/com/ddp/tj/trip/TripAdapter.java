@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
     private ArrayList<Trip> data;
     private ArrayList<Trip> dataAll;
+    private String currencySymbol;
 
     public TripAdapter(ArrayList<Trip> data){
         this.data = data;
@@ -29,6 +30,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     public TripViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_trip, parent, false);
         TripViewHolder vh = new TripViewHolder(v);
+        currencySymbol = parent.getResources().getString(R.string.currency_symbol);
         return vh;
     }
 
@@ -42,9 +44,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         else{
             holder.getFavorite().setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
         }
-        //holder.getImage().setBackgroundResource(R.drawable.ic_insert_emoticon_black_24dp);
-        holder.getPrice().setText("$ " + data.get(position).getPrice().toString());
-        holder.getRating().setText("$ " + data.get(position).getRating().toString());
+        if(data.get(position).getPicture() != null) {
+            holder.getImage().setImageBitmap(data.get(position).getPicture());
+        }
+        holder.getPrice().setText(currencySymbol + " " + data.get(position).getPrice().intValue());
+        holder.getRating().setText(data.get(position).getRating().toString());
 
         holder.getFavorite().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +85,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             this.price = itemView.findViewById(R.id.trip_price);
             this.rating = itemView.findViewById(R.id.trip_rating);
             this.favorite = itemView.findViewById(R.id.trip_favorite);
-            this.image = itemView.findViewById(R.id.image);
+            this.image = itemView.findViewById(R.id.trip_image);
 
 
 

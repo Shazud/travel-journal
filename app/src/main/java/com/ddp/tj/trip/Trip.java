@@ -2,6 +2,8 @@ package com.ddp.tj.trip;
 
 import android.graphics.Bitmap;
 
+import java.util.Calendar;
+
 public class Trip {
     private String title;
     private String destination;
@@ -9,6 +11,13 @@ public class Trip {
     private Double price;
     private Double rating;
     private boolean favorite;
+    private String type;
+    private Calendar startDate;
+    private Calendar endDate;
+
+    public Trip(){
+
+    }
 
     public Trip(String name, String destination, Bitmap picture, double price, double rating, boolean favorite) {
         this.title = name;
@@ -65,5 +74,37 @@ public class Trip {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Calendar getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Calendar startDate) {
+        this.startDate = startDate;
+    }
+
+    public Calendar getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
     }
 }

@@ -182,6 +182,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="20dp"
+        android:backgroundTint="@color/colorDelete"
         app:maxImageSize="40dp"
         />
 

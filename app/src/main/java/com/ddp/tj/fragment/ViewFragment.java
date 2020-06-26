@@ -74,10 +74,10 @@ public class ViewFragment extends Fragment {
         ratingBar.setRating(trip.getRating().floatValue());
         imageView.setImageBitmap(trip.getPicture());
         if(trip.isFavorite()){
-            favoriteButton.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
+            favoriteButton.setImageResource(R.drawable.ic_favorite_white_24dp);
         }
         else{
-            favoriteButton.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp);
+            favoriteButton.setImageResource(R.drawable.ic_favorite_border_white_24dp);
         }
 
         //buttons listeners
@@ -85,7 +85,7 @@ public class ViewFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new EditFragment(new Trip(), data);
+                Fragment fragment = new EditFragment(trip, data);
                 ((MainActivity)getActivity()).changeCurrentFragment(fragment);
             }
         });
@@ -96,10 +96,10 @@ public class ViewFragment extends Fragment {
                 boolean state = !trip.isFavorite();
                 trip.setFavorite(state);
                 if(state){
-                    v.setBackgroundResource(R.drawable.ic_favorite_white_24dp);
+                    ((FloatingActionButton)v).setImageResource(R.drawable.ic_favorite_white_24dp);
                 }
                 else{
-                    v.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp);
+                    ((FloatingActionButton)v).setImageResource(R.drawable.ic_favorite_border_white_24dp);
                 }
             }
         });

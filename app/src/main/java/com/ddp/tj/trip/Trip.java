@@ -2,6 +2,8 @@ package com.ddp.tj.trip;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 
 public class Trip {
@@ -106,5 +108,19 @@ public class Trip {
 
     public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
+    }
+
+    public Trip copyTrip() {
+        Trip trip = new Trip();
+        trip.title = title.concat("");
+        trip.price = price + 0;
+        trip.favorite = false;
+        trip.startDate = (Calendar)startDate.clone();
+        trip.endDate = (Calendar)endDate.clone();
+        trip.picture = picture.copy(picture.getConfig(), picture.isMutable());
+        trip.destination = destination.concat("");
+        trip.type = type.concat("");
+        trip.rating = rating + 0;
+        return trip;
     }
 }

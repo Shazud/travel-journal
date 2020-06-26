@@ -1,6 +1,7 @@
 package com.ddp.tj.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,6 +49,7 @@ public class EditFragment extends Fragment {
     private Button takePhoto;
     private ImageView imageView;
     private Trip trip;
+    private FloatingActionButton cancelButton;
     private FloatingActionButton saveButton;
     private FloatingActionButton deleteButton;
 
@@ -56,6 +58,9 @@ public class EditFragment extends Fragment {
     private static final int TAKE_PICK_CODE = 1002;
     private static final int PERMISSION_CODE_CAMERA = 1003;
 
+    private boolean newTrip;
+
+    private Trip tripClone;
 
     private ArrayList<Trip> data;
 
@@ -67,10 +72,22 @@ public class EditFragment extends Fragment {
         else{
             this.trip = trip;
         }
-
         this.data = data;
+        if(trip.getTitle()==null || trip.getTitle().isEmpty()){
+            newTrip = true;
+        }
+        else {
+            newTrip = false;
+            try {
+                this.tripClone = trip.copyTrip();
+            }
+            catch (Exception ignore){
+
+            }
+        }
     }
 
+    @SuppressLint("RestrictedApi")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,6 +106,7 @@ public class EditFragment extends Fragment {
         imageView = view.findViewById(R.id.trip_edit_image_view);
         saveButton = view.findViewById(R.id.trip_edit_save_fab);
         deleteButton = view.findViewById(R.id.trip_edit_delete_fab);
+        cancelButton = view.findViewById(R.id.trip_edit_cancel_fab);
 
         //update info
         if(trip.getTitle() != null){
@@ -144,10 +162,29 @@ public class EditFragment extends Fragment {
             imageView.setImageBitmap(trip.getPicture());
         }
 
+        if(newTrip){
+            cancelButton.setVisibility(View.INVISIBLE);
+        }
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(newTrip) {
+                    ((MainActivity) getActivity()).returnToPreviousFragment();
+                }
+                else{
+                    data.set(data.indexOf(trip),tripClone);
+                    ((MainActivity) getActivity()).returnToPreviousFragment();
+                }
+            }
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.add(trip);
+                if(newTrip) {
+                    data.add(trip);
+                }
                 ((MainActivity)getActivity()).returnToPreviousFragment();
             }
         });
@@ -155,6 +192,9 @@ public class EditFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!newTrip){
+                    data.remove(trip);
+                }
                 ((MainActivity)getActivity()).returnToPreviousFragment();
             }
         });

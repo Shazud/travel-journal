@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ddp.tj.R;
 import com.ddp.tj.activity.MainActivity;
+import com.ddp.tj.fragment.EditFragment;
 import com.ddp.tj.fragment.ViewFragment;
 
 import java.util.ArrayList;
@@ -44,6 +45,16 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 mainActivity.changeCurrentFragment(fragment);
             }
         });
+
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Fragment fragment = new EditFragment(vh.getTrip(), data);
+                mainActivity.changeCurrentFragment(fragment);
+                return true;
+            }
+        });
+
         return vh;
     }
 
